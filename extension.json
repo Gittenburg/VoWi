@@ -1,0 +1,36 @@
+{
+	"name": "VoWi",
+	"type": "other",
+	"license-name": "MIT",
+	"author": "Gittenburg",
+	"url": "https://github.com/Gittenburg/VoWi",
+	"version": "0.1.0",
+	"descriptionmsg": "vowi-desc",
+	"config": {
+		"UniNamespaces": {
+			"_merge_strategy": "array_plus"
+		}
+	},
+	"AutoloadClasses": {
+		"VoWi": "includes/VoWi.php",
+		"VoWiHooks": "includes/VoWiHooks.php",
+		"SpecialAddLVA": "includes/SpecialAddLVA.php",
+		"SpecialResources": "includes/SpecialResources.php"
+	},
+	"Hooks": {
+		"BeforePageDisplay": "VoWiHooks::onBeforePageDisplay",
+		"BeforeSortAttachments": "VoWiHooks::onBeforeSortAttachments",
+		"FlexiblePrefixDetails": "VoWiHooks::onFlexiblePrefixDetails",
+		"FlexiblePrefixBeforeDisplay": "VoWiHooks::onFlexiblePrefixBeforeDisplay",
+		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText",
+		"EditPage::showEditForm:initial": "VoWiHooks::onEditPage_showEditForm_initial"
+	},
+	"SpecialPages": {
+		"AddLVA": "SpecialAddLVA",
+		"Resources": "SpecialResources"
+	},
+	"MessagesDirs" : {
+		"FlexiblePrefix": ["i18n"]
+	},
+	"manifest_version": 1
+}
