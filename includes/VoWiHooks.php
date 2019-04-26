@@ -56,7 +56,7 @@ class VoWiHooks {
 			$out->prependHTML(Linker::linkKnown(SpecialPage::getTitleFor(
 				'Resources', $strippedTitle), wfMessage('resources-above-pages')));
 
-			$out->prependHTML($specialFlexPrefix->makeList($titles, $title));
+			$out->prependHTML($specialFlexPrefix->makeList($specialFlexPrefix->addDetails($titles), $title));
 		}
 	}
 

@@ -6,12 +6,12 @@ class SpecialResources extends SpecialFlexiblePrefix {
 		SpecialPage::__construct( 'resources' );
 	}
 
-	function makeList($titles, $currentTitle=null){
+	function makeList($items, $currentTitle=null){
 		$html = '';
-		foreach ($titles as $i => $title){
-			$listHTML = Attachments::makeList($title, $this->getContext());
+		foreach ($items as $i => $item){
+			$listHTML = Attachments::makeList($item['title'], $this->getContext());
 			if ($listHTML)
-				$html .= '<h2>'.Linker::linkKnown($title).'</h2>' . $listHTML;
+				$html .= '<h2>'.Linker::linkKnown($item['title']).'</h2>' . $listHTML;
 			if ($i > self::MAX_RESULTS)
 				return $html;
 		}
