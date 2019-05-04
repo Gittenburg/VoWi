@@ -18,18 +18,31 @@ class VoWiHooks {
 	}
 
 	static function onFlexiblePrefixDetails($title, &$details){
-		foreach (array_keys($title->getParentCategories()) as $category){
-			if ($category == 'Category:Veraltet'){
+		global $wgOutdatedLVACategory;
+
+		# not using $title->getParentCategories() because
+		# it adds a language-specific namespace prefix
+		$dbr = wfGetDB( DB_REPLICA );
+
+		$res = $dbr->select(
+			'categorylinks',
+			'cl_to',
+			[ 'cl_from' => $title->getArticleID() ],
+			__METHOD__
+		);
+		foreach($res as $row){
+			if ($row->cl_to === $wgOutdatedLVACategory){
 				$details['veraltet'] = 'veraltet';
 				break;
 			}
 		}
 
 		$count = Attachments::countAttachments($title);
-		$title->setFragment('#'.wfMessage('attachments-noun'));
 		$txt = "$count ".wfMessage('resources');
-		if ($count > 0)
+		if ($count > 0){
+			$title->setFragment('#'.wfMessage('attachments-noun'));
 			$txt = Linker::linkKnown($title, $txt);
+		}
 		$details['attachmentCount'] = $txt;
 	}
 

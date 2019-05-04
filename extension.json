@@ -9,7 +9,8 @@
 	"config": {
 		"UniNamespaces": {
 			"_merge_strategy": "array_plus"
-		}
+		},
+		"OutdatedLVACategory": "Veraltet"
 	},
 	"AutoloadClasses": {
 		"VoWi": "includes/VoWi.php",
