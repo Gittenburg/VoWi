@@ -6,7 +6,7 @@ class SpecialAddLVA extends IncludableSpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgUniNamespaces;
+		global $wgUniNamespaces, $wgLVATypes;
 		$this->setHeaders();
 		$out = $this->getOutput();
 
@@ -25,7 +25,7 @@ class SpecialAddLVA extends IncludableSpecialPage {
 			'Type' => [
 				'label' => wfMessage('addlva-type'),
 				'type' => 'select',
-				'options' => array_combine(VoWi::LVA_TYPES, VoWi::LVA_TYPES)
+				'options' => array_combine($wgLVATypes, $wgLVATypes)
 			],
 			'Teachers' => [
 				'label' => wfMessage('addlva-teachers'),

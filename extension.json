@@ -10,6 +10,7 @@
 		"UniNamespaces": {
 			"_merge_strategy": "array_plus"
 		},
+		"LVATypes": ["VU", "VL", "VO", "VD", "UE", "SE", "PS", "PR", "LU", "EX", "AU", "AG"],
 		"OutdatedLVACategory": "Veraltet"
 	},
 	"AutoloadClasses": {

@@ -54,7 +54,8 @@ class VoWiHooks {
 	}
 
 	static function onBeforePageDisplay(OutputPage $out, Skin $skin) {
-		$suffixRegex = '/ (' . implode('|', VoWi::LVA_TYPES) . ').*/';
+		global $wgLVATypes;
+		$suffixRegex = '/ (' . implode('|', $wgLVATypes) . ').*/';
 		$title = $out->getTitle();
 		if (VoWi::isLVA($title) && $out->getRequest()->getText('action', 'view') == 'view'){
 			$prefix = preg_replace($suffixRegex, '', $title->getText());
