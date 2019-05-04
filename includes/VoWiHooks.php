@@ -57,7 +57,7 @@ class VoWiHooks {
 		$suffixRegex = '/ (' . implode('|', VoWi::LVA_TYPES) . ').*/';
 		$title = $out->getTitle();
 		if (VoWi::isLVA($title) && $out->getRequest()->getText('action', 'view') == 'view'){
-			$strippedTitle = Title::newFromText(preg_replace($suffixRegex, '', $title->getPrefixedText()));
+			$strippedTitle = preg_replace($suffixRegex, '', $title->getText());
 
 			$specialFlexPrefix = new SpecialFlexiblePrefix();
 
