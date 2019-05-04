@@ -12,29 +12,31 @@ class SpecialAddLVA extends IncludableSpecialPage {
 
 		$form = new HTMLForm([
 			'Namespace'=> [
-				'label' => wfMessage('addlva-university'),
+				'label-message' => 'addlva-university',
 				'type' => 'select',
 				'required' => true,
 				'options' => array_combine(array_values($wgUniNamespaces), array_values($wgUniNamespaces))
 			],
 			'Name' => [
-				'label' => wfMessage('addlva-name'),
+				'label-message' => 'addlva-name',
 				'type' => 'text',
-				'required' => true
+				'required' => true,
+				'placeholder-message' => 'addlva-name-example'
 			],
 			'Type' => [
-				'label' => wfMessage('addlva-type'),
+				'label-message' => 'addlva-type',
 				'type' => 'select',
 				'options' => array_combine($wgLVATypes, $wgLVATypes)
 			],
 			'Teachers' => [
-				'label' => wfMessage('addlva-teachers'),
+				'label-message' => 'addlva-teachers',
 				'type' => 'text',
 				'required' => true,
-				'size' => 15
+				'size' => 15,
+				'placeholder-message' => 'addlva-teachers-example'
 			],
 			'OptionalInfo' => [
-				'label' => wfMessage('addlva-optional-info'),
+				'label-message' => 'addlva-optional-info',
 				'type' => 'text',
 				'size' => 15
 			]
