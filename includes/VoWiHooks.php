@@ -57,17 +57,17 @@ class VoWiHooks {
 		$suffixRegex = '/ (' . implode('|', VoWi::LVA_TYPES) . ').*/';
 		$title = $out->getTitle();
 		if (VoWi::isLVA($title) && $out->getRequest()->getText('action', 'view') == 'view'){
-			$strippedTitle = preg_replace($suffixRegex, '', $title->getText());
+			$prefix = preg_replace($suffixRegex, '', $title->getText());
 
 			$specialFlexPrefix = new SpecialFlexiblePrefix();
 
-			$titles =  $specialFlexPrefix->getTitles($strippedTitle);
+			$titles =  $specialFlexPrefix->getTitles($prefix);
 			if ($titles->count() === 1)
 				# only found current page
 				return;
 
 			$out->prependHTML(Linker::linkKnown(SpecialPage::getTitleFor(
-				'Resources', $strippedTitle), wfMessage('resources-above-pages')));
+				'Resources', $prefix), wfMessage('resources-above-pages')));
 
 			$out->prependHTML($specialFlexPrefix->makeList($specialFlexPrefix->addDetails($titles), $title));
 		}
