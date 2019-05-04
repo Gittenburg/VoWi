@@ -24,8 +24,7 @@
 		"BeforeSortAttachments": "VoWiHooks::onBeforeSortAttachments",
 		"FlexiblePrefixDetails": "VoWiHooks::onFlexiblePrefixDetails",
 		"FlexiblePrefixBeforeDisplay": "VoWiHooks::onFlexiblePrefixBeforeDisplay",
-		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText",
-		"EditPage::showEditForm:initial": "VoWiHooks::onEditPage_showEditForm_initial"
+		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText"
 	},
 	"SpecialPages": {
 		"AddLVA": "SpecialAddLVA",

@@ -8,7 +8,6 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 * provides `Special:Resources` (like `Special:FlexiblePrefix` but shows attachments)
 * customizes attachments sorting (up to four digits ascending, then descending)
 * hooks into the edit form to preload configurable text when creating LVAs and Beispiel pages
-* hooks into the edit form to provide configurable hints when editing LVA and Beispiel pages
 
 For an examplary configuration, refer to `LocalSettings.php`.
 

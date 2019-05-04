@@ -74,18 +74,11 @@ class VoWiHooks {
 		}
 	}
 
-	# the following messages aren't provided by this extension
 	static function onEditFormPreloadText(&$text, $title){
+		# these messages aren't provided by this extension
 		if (VoWi::isLVA($title))
 			$text = wfMessage('editformpreload-lva')->plain();
 		elseif (VoWi::isBeispiel($title))
 			$text = wfMessage('editformpreload-beispiel')->plain();
-	}
-
-	static function onEditPage_showEditForm_initial(&$editor, &$out){
-		if (VoWi::isLVA($out->getTitle()))
-			$out->addWikiText(wfMessage('editformhint-lva')->plain());
-		elseif (VoWi::isBeispiel($out->getTitle()))
-			$out->addWikiText(wfMessage('editformhint-beispiel')->plain());
 	}
 }
