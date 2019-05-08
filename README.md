@@ -7,7 +7,9 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 * provides `Special:AddLVA` to create LVA pages
 * provides `Special:Resources` (like `Special:FlexiblePrefix` but shows attachments)
 * customizes attachments sorting (up to four digits ascending, then descending)
-* hooks into the edit form to preload configurable text when creating LVAs and Beispiel pages
+* hooks into the edit form to preload configurable text when creating LVAs (`MediaWiki:editformpreload-lva`) and Beispiel pages (`MediaWiki:editformpreload-beispiel`)
+
+## Setup
 
 For an examplary configuration, refer to `LocalSettings.php`.
 

@@ -67,10 +67,11 @@ class VoWiHooks {
 				# only found current page
 				return;
 
-			$out->prependHTML(Linker::linkKnown(SpecialPage::getTitleFor(
-				'Resources', $prefix), wfMessage('resources-above-pages')));
-
 			$out->prependHTML($specialFlexPrefix->makeList($specialFlexPrefix->addDetails($titles), $title));
+			$out->prependHTML(wfMessage('similarly-named-lvas').' ('
+		.Linker::linkKnown(SpecialPage::getTitleFor(
+				'Resources', $prefix), wfMessage('resources')).'):'
+			);
 		}
 	}
 
