@@ -9,11 +9,12 @@ class SpecialResources extends SpecialFlexiblePrefix {
 	function makeList($items, $currentTitle=null){
 		$html = '';
 		foreach ($items as $i => $item){
-			$listHTML = Attachments::makeList($item['title'], $this->getContext());
-			if ($listHTML)
-				$html .= '<h2>'.Linker::linkKnown($item['title']).'</h2>' . $listHTML;
+			$pages = Attachments::getPages($item['title']);
+			$files = Attachments::getFiles($item['title']);
+			$listHTML = Attachments::makeList($item['title'], $pages, $files, $this->getContext());
+			$html .= '<h2>'.Linker::linkKnown($item['title']).'</h2>' . $listHTML;
 			if ($i > self::MAX_RESULTS)
-				return $html;
+				break;
 		}
 		return $html;
 	}

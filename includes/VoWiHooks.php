@@ -17,6 +17,10 @@ class VoWiHooks {
 		return false;
 	}
 
+	static function onShowEmptyAttachmentsSection($title){
+		return VoWi::isLVA($title);
+	}
+
 	static function onFlexiblePrefixDetails($title, &$details){
 		global $wgOutdatedLVACategory;
 
@@ -38,7 +42,7 @@ class VoWiHooks {
 		}
 
 		$count = Attachments::countAttachments($title);
-		$txt = "$count ".wfMessage('resources');
+		$txt = "$count ".wfMessage('resources', $count);
 		if ($count > 0){
 			$title->setFragment('#'.wfMessage('attachments-noun'));
 			$txt = Linker::linkKnown($title, $txt);

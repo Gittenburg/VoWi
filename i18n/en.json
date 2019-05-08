@@ -9,7 +9,7 @@
 	"addlva-teachers-example": "e.g. Karigl",
 	"addlva-optional-info": "Optional Info",
 	"addlva-submit": "Create LVA page",
-	"resources": "Resources",
+	"resources": "{{plural:$1|Resource|Resources}}",
 	"similarly-named-lvas": "Similarly named LVAs",
 	"resources-above-lvas": "Resources of above LVAs"
 }

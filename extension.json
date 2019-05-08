@@ -22,6 +22,7 @@
 	"Hooks": {
 		"BeforePageDisplay": "VoWiHooks::onBeforePageDisplay",
 		"BeforeSortAttachments": "VoWiHooks::onBeforeSortAttachments",
+		"ShowEmptyAttachmentsSection": "VoWiHooks::onShowEmptyAttachmentsSection",
 		"FlexiblePrefixDetails": "VoWiHooks::onFlexiblePrefixDetails",
 		"FlexiblePrefixBeforeDisplay": "VoWiHooks::onFlexiblePrefixBeforeDisplay",
 		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText"
