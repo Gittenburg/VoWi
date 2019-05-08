@@ -8,7 +8,7 @@
 	"addlva-teachers-example": "z.B. Karigl",
 	"addlva-optional-info": "optionale Zusatzinfo",
 	"addlva-submit": "Anlegen",
-	"resources": "{{plural:$1|Materialie|Materialien}}",
+	"resources": "{{plural:$1|Material|Materialien}}",
 	"similarly-named-lvas": "Ähnlich benannte LVAs",
 	"resources-above-lvas": "Materialien obiger LVAs",
 	"resourceoverview": "Materialienübersicht für „$1“"
