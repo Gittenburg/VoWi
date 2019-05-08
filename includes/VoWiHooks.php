@@ -67,14 +67,14 @@ class VoWiHooks {
 			$specialFlexPrefix = new SpecialFlexiblePrefix();
 
 			$titles =  $specialFlexPrefix->getTitles($prefix);
-			if ($titles->count() === 1)
-				# only found current page
+			if ($titles->count() <= 1)
+				# found none or just current page
 				return;
 
 			$out->prependHTML($specialFlexPrefix->makeList($specialFlexPrefix->addDetails($titles), $title));
 			$out->prependHTML(wfMessage('similarly-named-lvas').' ('
 		.Linker::linkKnown(SpecialPage::getTitleFor(
-				'Resources', $prefix), wfMessage('resources')).'):'
+				'ResourceOverview', $prefix), wfMessage('resources')).'):'
 			);
 		}
 	}

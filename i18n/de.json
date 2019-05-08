@@ -10,5 +10,6 @@
 	"addlva-submit": "Anlegen",
 	"resources": "{{plural:$1|Materialie|Materialien}}",
 	"similarly-named-lvas": "Ähnlich benannte LVAs",
-	"resources-above-lvas": "Materialien obiger LVAs"
+	"resources-above-lvas": "Materialien obiger LVAs",
+	"resourceoverview": "Materialienübersicht für „$1“"
 }

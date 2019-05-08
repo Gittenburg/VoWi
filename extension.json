@@ -17,6 +17,7 @@
 		"VoWi": "includes/VoWi.php",
 		"VoWiHooks": "includes/VoWiHooks.php",
 		"SpecialAddLVA": "includes/SpecialAddLVA.php",
+		"SpecialResourceOverview": "includes/SpecialResourceOverview.php",
 		"SpecialResources": "includes/SpecialResources.php"
 	},
 	"Hooks": {
@@ -29,10 +30,14 @@
 	},
 	"SpecialPages": {
 		"AddLVA": "SpecialAddLVA",
-		"Resources": "SpecialResources"
+		"Resources": "SpecialResources",
+		"ResourceOverview": "SpecialResourceOverview"
 	},
 	"MessagesDirs" : {
 		"FlexiblePrefix": ["i18n"]
+	},
+	"ExtensionMessagesFiles": {
+		"VoWiAlias": "i18n/VoWi.i18n.alias.php"
 	},
 	"manifest_version": 1
 }
