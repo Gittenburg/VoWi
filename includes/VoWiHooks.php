@@ -44,7 +44,7 @@ class VoWiHooks {
 		$count = Attachments::countAttachments($title);
 		$txt = "$count ".wfMessage('resources', $count);
 		if ($count > 0){
-			$title->setFragment('#'.wfMessage('attachments-noun'));
+			$title->setFragment('#'.wfMessage('attachments'));
 			$txt = Linker::linkKnown($title, $txt);
 		}
 		$details['attachmentCount'] = $txt;
