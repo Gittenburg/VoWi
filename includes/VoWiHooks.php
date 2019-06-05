@@ -8,10 +8,11 @@ class VoWiHooks {
 				unset($links[$key]);
 			}
 		uksort($links, function ($a, $b){
-			$pattern = '/(.+)(\d{4}.+)/';
+			$pattern = '/(.+)(\d{4})(.+)/';
 			if (preg_match($pattern, $a, $match_a))
 				if (preg_match($pattern, $b, $match_b) && $match_a[1] == $match_b[1])
-					return $match_a[2] < $match_b[2];
+					if ($match_a[2] != $match_b[2])
+						return $match_a[2] < $match_b[2];
 			return $a > $b;
 		});
 		return false;
