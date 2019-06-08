@@ -12,5 +12,6 @@
 	"resources": "{{plural:$1|Resource|Resources}}",
 	"similarly-named-lvas": "Similarly named LVAs",
 	"resources-above-lvas": "Resources of above LVAs",
-	"resourceoverview": "Resource overview for \"$1\""
+	"resourceoverview": "Resource overview for \"$1\"",
+	"coursebyid": "CourseById"
 }

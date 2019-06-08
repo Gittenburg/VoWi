@@ -18,7 +18,8 @@
 		"VoWiHooks": "includes/VoWiHooks.php",
 		"SpecialAddLVA": "includes/SpecialAddLVA.php",
 		"SpecialResourceOverview": "includes/SpecialResourceOverview.php",
-		"SpecialResources": "includes/SpecialResources.php"
+		"SpecialResources": "includes/SpecialResources.php",
+		"SpecialCourseById": "includes/SpecialCourseById.php"
 	},
 	"Hooks": {
 		"BeforePageDisplay": "VoWiHooks::onBeforePageDisplay",
@@ -31,7 +32,8 @@
 	"SpecialPages": {
 		"AddLVA": "SpecialAddLVA",
 		"Resources": "SpecialResources",
-		"ResourceOverview": "SpecialResourceOverview"
+		"ResourceOverview": "SpecialResourceOverview",
+		"CourseById": "SpecialCourseById"
 	},
 	"MessagesDirs" : {
 		"FlexiblePrefix": ["i18n"]
