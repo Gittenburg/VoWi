@@ -12,5 +12,8 @@
 	"resources": "{{plural:$1|Material|Materialien}}",
 	"similarly-named-lvas": "Ähnlich benannte LVAs",
 	"resources-above-lvas": "Materialien obiger LVAs",
-	"resourceoverview": "Materialienübersicht für „$1“"
+	"resourceoverview": "Materialienübersicht für „$1“",
+	"coursebyid-multiple-results": "Mehrere LVAs gefunden",
+	"coursebyid-not-found": "LVA nicht gefunden",
+	"coursebyid-not-found-text": "Probier [[Special:Search|die Suche]]. Wenn es für den Kurs noch keine Seite gibt, kannst du [[Special:AddLVA|eine erstellen]]."
 }

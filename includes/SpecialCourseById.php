@@ -35,12 +35,12 @@ class SpecialCourseById extends SpecialPage {
 				$res->getResults()[0]->getTitle()->getFullURL()
 			);
 		} else if ($res->getCount() > 1){
-			$out->setPageTitle('Multiple found');
+			$out->setPageTitle(wfMessage('coursebyid-multiple-results'));
 			$out->addWikiText(SMWQueryProcessor::getResultPrinter('ul')->getResult($res, $params, SMW_OUTPUT_WIKI));
 
 		} else {
-			$out->setPageTitle('No such course found');
-			$out->addWikiText(self::USAGE);
+			$out->setPageTitle(wfMessage('coursebyid-not-found'));
+			$out->addWikiText(wfMessage('coursebyid-not-found-text')->text());
 		}
 	}
 }
