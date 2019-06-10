@@ -8,7 +8,6 @@
 	"addlva-type": "LVA type",
 	"addlva-teachers": "Teachers",
 	"addlva-teachers-example": "e.g. Karigl",
-	"addlva-optional-info": "Optional Info",
 	"addlva-submit": "Create LVA page",
 	"resources": "{{plural:$1|Resource|Resources}}",
 	"similarly-named-lvas": "Similarly named LVAs",

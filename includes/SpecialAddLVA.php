@@ -34,11 +34,6 @@ class SpecialAddLVA extends IncludableSpecialPage {
 				'required' => true,
 				'size' => 15,
 				'placeholder-message' => 'addlva-teachers-example'
-			],
-			'OptionalInfo' => [
-				'label-message' => 'addlva-optional-info',
-				'type' => 'text',
-				'size' => 15
 			]
 		], $this->getContext());
 
@@ -48,9 +43,7 @@ class SpecialAddLVA extends IncludableSpecialPage {
 	}
 
 	function submit($data){
-		if ($data['OptionalInfo'])
-			$data['OptionalInfo'] = ' '.$data['OptionalInfo'];
-		$title = Title::newFromText("$data[Namespace]:$data[Name] $data[Type] ($data[Teachers]$data[OptionalInfo])");
+		$title = Title::newFromText("$data[Namespace]:$data[Name] $data[Type] ($data[Teachers])");
 		if ($title == null)
 			return wfMessage('invalidtitle');
 		$this->getOutput()->redirect($title->getFullURL(['action'=>'edit', 'redlink'=>1]));

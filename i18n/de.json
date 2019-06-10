@@ -7,7 +7,6 @@
 	"addlva-type": "LVA-Typ",
 	"addlva-teachers": "Lehrende",
 	"addlva-teachers-example": "z.B. Karigl",
-	"addlva-optional-info": "optionale Zusatzinfo",
 	"addlva-submit": "Anlegen",
 	"resources": "{{plural:$1|Material|Materialien}}",
 	"similarly-named-lvas": "Ähnlich benannte LVAs",
