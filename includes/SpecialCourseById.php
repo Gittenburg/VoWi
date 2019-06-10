@@ -5,7 +5,7 @@ class SpecialCourseById extends SpecialPage {
 	const USAGE = "URL parameters:\n"
 		. "* <code>ns</code> ... the name of the university namespace\n"
 		. "* <code>id</code> ... a [[Property:Hat Kurs-ID]] value\n"
-		."[{{fullurl:Special:CourseById}}&ns=TU_Wien&id=123456 Example]";
+		."[{{fullurl:Special:CourseById|ns=TU_Wien&id=123456}} Example]";
 
 	function __construct() {
 		parent::__construct( 'CourseById' );
