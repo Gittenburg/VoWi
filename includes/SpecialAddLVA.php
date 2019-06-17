@@ -21,7 +21,6 @@ class SpecialAddLVA extends IncludableSpecialPage {
 				'label-message' => 'addlva-name',
 				'type' => 'text',
 				'required' => true,
-				'placeholder-message' => 'addlva-name-example'
 			],
 			'Type' => [
 				'label-message' => 'addlva-type',
@@ -42,7 +41,12 @@ class SpecialAddLVA extends IncludableSpecialPage {
 		$form->show();
 	}
 
+	const INVALID_CHARS = [':', '/', '(', ')'];
+
 	function submit($data){
+		foreach (self::INVALID_CHARS as $char)
+			if (strpos($data['Name'].$data['Teachers'], $char) !== FALSE)
+				return wfMessage('addlva-invalidchars', implode(self::INVALID_CHARS,', '));
 		$title = Title::newFromText("$data[Namespace]:$data[Name] $data[Type] ($data[Teachers])");
 		if ($title == null)
 			return wfMessage('invalidtitle');
