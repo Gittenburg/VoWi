@@ -38,6 +38,7 @@ class SpecialAddLVA extends IncludableSpecialPage {
 
 		$form->setSubmitText(wfMessage('addlva-submit'));
 		$form->setSubmitCallback([$this, 'submit']);
+		$form->addPreText(wfMessage('addlva-text')->parseAsBlock());
 		$form->show();
 	}
 

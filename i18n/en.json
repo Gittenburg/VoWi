@@ -1,7 +1,7 @@
 {
 	"vowi-desc": "Specially tailored extension for https://vowi.fsinf.at/",
 	"addlva": "Add LVA page",
-	"addlva-desc": "[[Special:AddLVA]]",
+	"addlva-text": "",
 	"addlva-university": "University",
 	"addlva-name": "LVA name",
 	"addlva-type": "LVA type",
