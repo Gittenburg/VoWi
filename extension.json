@@ -4,7 +4,7 @@
 	"license-name": "MIT",
 	"author": "Gittenburg",
 	"url": "https://github.com/Gittenburg/VoWi",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"descriptionmsg": "vowi-desc",
 	"config": {
 		"UniNamespaces": {
@@ -27,7 +27,8 @@
 		"ShowEmptyAttachmentsSection": "VoWiHooks::onShowEmptyAttachmentsSection",
 		"FlexiblePrefixDetails": "VoWiHooks::onFlexiblePrefixDetails",
 		"FlexiblePrefixBeforeDisplay": "VoWiHooks::onFlexiblePrefixBeforeDisplay",
-		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText"
+		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText",
+		"PrefixSearchBackend": "VoWiHooks::onPrefixSearchBackend"
 	},
 	"SpecialPages": {
 		"AddLVA": "SpecialAddLVA",

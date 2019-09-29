@@ -9,6 +9,7 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 * customizes attachments sorting (up to four digits ascending, then descending)
 * hooks into the edit form to preload configurable text when creating LVAs (`MediaWiki:editformpreload-lva`) and Beispiel pages (`MediaWiki:editformpreload-beispiel`)
 * provides `Special:CourseById` which redirects you to a LVA page given its course id and namespace (requires [Semantic MediaWiki](https://www.semantic-mediawiki.org/)).
+* exclude subpages from prefix searches
 
 ## Setup
 
