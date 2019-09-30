@@ -47,3 +47,4 @@ $wgFlexiblePrefixNamespaces = array_keys($vowiUniNamespaces);
 ## Load this extension
 wfLoadExtension( 'VoWi' );
 $wgUniNamespaces = $vowiUniNamespaces;
+$wgSearchType = 'VoWiSearch';

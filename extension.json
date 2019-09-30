@@ -19,7 +19,8 @@
 		"SpecialAddLVA": "includes/SpecialAddLVA.php",
 		"SpecialResourceOverview": "includes/SpecialResourceOverview.php",
 		"SpecialResources": "includes/SpecialResources.php",
-		"SpecialCourseById": "includes/SpecialCourseById.php"
+		"SpecialCourseById": "includes/SpecialCourseById.php",
+		"VoWiSearch": "includes/VoWiSearch.php"
 	},
 	"Hooks": {
 		"BeforePageDisplay": "VoWiHooks::onBeforePageDisplay",
@@ -27,8 +28,7 @@
 		"ShowEmptyAttachmentsSection": "VoWiHooks::onShowEmptyAttachmentsSection",
 		"FlexiblePrefixDetails": "VoWiHooks::onFlexiblePrefixDetails",
 		"FlexiblePrefixBeforeDisplay": "VoWiHooks::onFlexiblePrefixBeforeDisplay",
-		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText",
-		"PrefixSearchBackend": "VoWiHooks::onPrefixSearchBackend"
+		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText"
 	},
 	"SpecialPages": {
 		"AddLVA": "SpecialAddLVA",
