@@ -1,6 +1,8 @@
 <?php
 
-class VoWiSearch extends SearchEngine {
+class_alias(SearchEngineFactory::getSearchEngineClass(wfGetDB(DB_REPLICA)), 'DatabaseSearch');
+
+class VoWiSearch extends DatabaseSearch {
 	protected function completionSearchBackend( $search ) {
 		$backend = new VoWiTitlePrefixSearch;
 		$results =  $backend->defaultSearchBackend( $this->namespaces, $search, $this->limit, $this->offset );
