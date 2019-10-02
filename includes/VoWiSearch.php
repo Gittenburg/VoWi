@@ -11,10 +11,10 @@ class VoWiSearch extends DatabaseSearch {
 }
 
 class VoWiTitlePrefixSearch extends TitlePrefixSearch {
-	// The code of this function was copied from PrefixSearch::defaultSearchBackend(),
-	// just the third condition was added to exclude subpages directly in the SQL query.
+	// The code of this function was initially copied from PrefixSearch::defaultSearchBackend().
 
 	public function defaultSearchBackend( $namespaces, $search, $limit, $offset ) {
+		global $wgOutdatedLVACategory;
 		// Backwards compatability with old code. Default to NS_MAIN if no namespaces provided.
 		if ( $namespaces === null ) {
 			$namespaces = [];
@@ -46,21 +46,27 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 			$condition = [
 				'page_namespace' => $namespaces,
 				'page_title' . $dbr->buildLike( $prefix, $dbr->anyString() ),
+				// VoWiSearch modification: exclude subpages because we have so many
 				'NOT page_title' . $dbr->buildLike( $dbr->anyString(), '/', $dbr->anyString())
 			];
 			$conds[] = $dbr->makeList( $condition, LIST_AND );
 		}
 
-		$table = 'page';
-		$fields = [ 'page_id', 'page_namespace', 'page_title' ];
+		// VoWiSearch modification: demote pages in $wgOutdatedLVACategory
+		$table = ['page', 'outdated' => 'categorylinks'];
+		$fields = [ 'page_id', 'page_namespace', 'page_title',
+			'if(cl_from is NULL,0,1) as outdated' ];
 		$conds = $dbr->makeList( $conds, LIST_OR );
 		$options = [
 			'LIMIT' => $limit,
-			'ORDER BY' => [ 'page_title', 'page_namespace' ],
+			'ORDER BY' => [ 'outdated', 'page_title', 'page_namespace'],
 			'OFFSET' => $offset
 		];
+		$join_conds = [
+			'outdated' => ['LEFT JOIN', 'page_id=cl_from', cl_to=>$wgOutdatedLVACategory]
+		];
 
-		$res = $dbr->select( $table, $fields, $conds, __METHOD__, $options );
+		$res = $dbr->select( $table, $fields, $conds, __METHOD__, $options, $join_conds );
 
 		return iterator_to_array( TitleArray::newFromResult( $res ) );
 	}
