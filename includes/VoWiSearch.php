@@ -55,11 +55,13 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 		// VoWiSearch modification: demote pages in $wgOutdatedLVACategory
 		$table = ['page', 'outdated' => 'categorylinks'];
 		$fields = [ 'page_id', 'page_namespace', 'page_title',
-			'if(cl_from is NULL,0,1) as outdated' ];
+			'if(cl_from is NULL,0,1) as outdated',
+			'CASE WHEN page_namespace in (3000,3002,3004,3006) THEN 1
+			      ELSE page_namespace END AS ns_key'];
 		$conds = $dbr->makeList( $conds, LIST_OR );
 		$options = [
 			'LIMIT' => $limit,
-			'ORDER BY' => [ 'outdated', 'page_title', 'page_namespace'],
+			'ORDER BY' => [ 'outdated', 'ns_key', 'page_title', 'page_namespace'],
 			'OFFSET' => $offset
 		];
 		$join_conds = [
