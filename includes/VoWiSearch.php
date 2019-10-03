@@ -65,7 +65,7 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 			'OFFSET' => $offset
 		];
 		$join_conds = [
-			'outdated' => ['LEFT JOIN', 'page_id=cl_from', cl_to=>$wgOutdatedLVACategory]
+			'outdated' => ['LEFT JOIN', ['page_id=cl_from', 'cl_to'=>$wgOutdatedLVACategory]]
 		];
 
 		$res = $dbr->select( $table, $fields, $conds, __METHOD__, $options, $join_conds );
