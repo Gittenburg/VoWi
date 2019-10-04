@@ -47,10 +47,12 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 
 				// Modification: use Extension:TitleKey for case-insensitive searches
 				'tk_key' . $dbr->buildLike( $prefix, $dbr->anyString() ),
-
-				// Modification: exclude subpages because we have so many
-				'NOT page_title' . $dbr->buildLike( $dbr->anyString(), '/', $dbr->anyString())
 			];
+
+			if (strpos($search, '/') == false)
+				// Modification: exclude subpages by default because we have so many
+				$conds[] = 'NOT page_title' . $dbr->buildLike( $dbr->anyString(), '/', $dbr->anyString());
+
 			$conds[] = $dbr->makeList( $condition, LIST_AND );
 		}
 
