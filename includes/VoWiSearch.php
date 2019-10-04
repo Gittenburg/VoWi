@@ -16,6 +16,7 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 	public function defaultSearchBackend( $namespaces, $search, $limit, $offset ) {
 		global $wgContLang;
 		global $wgOutdatedLVACategory;
+		global $wgUniNamespaces;
 		// Backwards compatability with old code. Default to NS_MAIN if no namespaces provided.
 		if ( $namespaces === null ) {
 			$namespaces = [];
@@ -41,9 +42,9 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 		// Often there is only one prefix that applies to all requested namespaces,
 		// but sometimes there are two if some namespaces do not always capitalize.
 		$conds = [];
-		foreach ( $prefixes as $prefix => $namespaces ) {
+		foreach ( $prefixes as $prefix => $namespace ) {
 			$condition = [
-				'page_namespace' => $namespaces,
+				'page_namespace' => $namespace,
 
 				// Modification: use Extension:TitleKey for case-insensitive searches
 				'tk_key' . $dbr->buildLike( $prefix, $dbr->anyString() ),
@@ -58,10 +59,15 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 
 		// Modification: demote pages in $wgOutdatedLVACategory
 		$table = ['page', 'outdated' => 'categorylinks', 'tk' => 'titlekey'];
+		$uniNamespaceIds = join(',', array_keys($wgUniNamespaces));
+		$NS_FILE = NS_FILE;
 		$fields = [ 'page_id', 'page_namespace', 'page_title',
 			'if(cl_from is NULL,0,1) as outdated',
-			'CASE WHEN page_namespace in (3000,3002,3004,3006) THEN 1
-			      ELSE page_namespace END AS ns_key'];
+			"CASE
+				WHEN page_namespace in ($uniNamespaceIds) THEN 20
+				WHEN page_namespace = $NS_FILE THEN 30
+				ELSE page_namespace
+			END AS ns_key"];
 		$conds = $dbr->makeList( $conds, LIST_OR );
 		$options = [
 			'LIMIT' => $limit,
