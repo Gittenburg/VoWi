@@ -14,6 +14,7 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 	// The code of this function was initially copied from PrefixSearch::defaultSearchBackend().
 
 	public function defaultSearchBackend( $namespaces, $search, $limit, $offset ) {
+		global $wgContLang;
 		global $wgOutdatedLVACategory;
 		// Backwards compatability with old code. Default to NS_MAIN if no namespaces provided.
 		if ( $namespaces === null ) {
@@ -32,9 +33,7 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 				return $this->specialSearch( $search, $limit, $offset );
 			}
 
-			$title = Title::makeTitleSafe( $namespace, $search );
-			// Why does the prefix default to empty?
-			$prefix = $title ? $title->getDBkey() : '';
+			$prefix = $wgContLang->caseFold( $search );
 			$prefixes[$prefix][] = $namespace;
 		}
 
@@ -45,15 +44,18 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 		foreach ( $prefixes as $prefix => $namespaces ) {
 			$condition = [
 				'page_namespace' => $namespaces,
-				'page_title' . $dbr->buildLike( $prefix, $dbr->anyString() ),
-				// VoWiSearch modification: exclude subpages because we have so many
+
+				// Modification: use Extension:TitleKey for case-insensitive searches
+				'tk_key' . $dbr->buildLike( $prefix, $dbr->anyString() ),
+
+				// Modification: exclude subpages because we have so many
 				'NOT page_title' . $dbr->buildLike( $dbr->anyString(), '/', $dbr->anyString())
 			];
 			$conds[] = $dbr->makeList( $condition, LIST_AND );
 		}
 
-		// VoWiSearch modification: demote pages in $wgOutdatedLVACategory
-		$table = ['page', 'outdated' => 'categorylinks'];
+		// Modification: demote pages in $wgOutdatedLVACategory
+		$table = ['page', 'outdated' => 'categorylinks', 'tk' => 'titlekey'];
 		$fields = [ 'page_id', 'page_namespace', 'page_title',
 			'if(cl_from is NULL,0,1) as outdated',
 			'CASE WHEN page_namespace in (3000,3002,3004,3006) THEN 1
@@ -65,7 +67,8 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 			'OFFSET' => $offset
 		];
 		$join_conds = [
-			'outdated' => ['LEFT JOIN', ['page_id=cl_from', 'cl_to'=>$wgOutdatedLVACategory]]
+			'outdated' => ['LEFT JOIN', ['page_id=cl_from', 'cl_to'=>$wgOutdatedLVACategory]],
+			'tk' => ['JOIN', ['tk_page=page_id']]
 		];
 
 		$res = $dbr->select( $table, $fields, $conds, __METHOD__, $options, $join_conds );
