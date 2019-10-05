@@ -1,5 +1,14 @@
 <?php
 class VoWiHooks {
+	public static function onParserFirstCallInit( Parser $parser ) {
+		$parser->setHook( 'searchinput', [ self::class, 'renderSearchInput' ]);
+	}
+
+	public static function renderSearchInput( $input, $args, $parser) {
+		global $wgScript;
+		// the mediawiki.searchSuggest module enables suggestions for inputs with the mw-searchInput class
+		return "<form action='$wgScript'><input type=hidden name=title value=Special:Search><input name=search class=mw-searchInput></form>";
+	}
 
 	static function onBeforeSortAttachments(&$links){
 		$umlaute = ['Ä'=>'Ae', 'Ö'=>'Oe', 'Ü' => 'Ue'];

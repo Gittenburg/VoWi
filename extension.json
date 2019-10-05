@@ -28,7 +28,8 @@
 		"ShowEmptyAttachmentsSection": "VoWiHooks::onShowEmptyAttachmentsSection",
 		"FlexiblePrefixDetails": "VoWiHooks::onFlexiblePrefixDetails",
 		"FlexiblePrefixBeforeDisplay": "VoWiHooks::onFlexiblePrefixBeforeDisplay",
-		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText"
+		"EditFormPreloadText": "VoWiHooks::onEditFormPreloadText",
+		"ParserFirstCallInit": "VoWiHooks::onParserFirstCallInit"
 	},
 	"SpecialPages": {
 		"AddLVA": "SpecialAddLVA",

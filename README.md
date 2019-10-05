@@ -10,6 +10,7 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 * hooks into the edit form to preload configurable text when creating LVAs (`MediaWiki:editformpreload-lva`) and Beispiel pages (`MediaWiki:editformpreload-beispiel`)
 * provides `Special:CourseById` which redirects you to a LVA page given its course id and namespace (requires [Semantic MediaWiki](https://www.semantic-mediawiki.org/)).
 * provides a search engine that excludes subpages (`$wgSearchType = 'VoWiSearch';`), requires [Extension:TitleKey](https://www.mediawiki.org/wiki/Extension:TitleKey)
+* provides a `<searchinput>` tag to put a search input with autocompletion on a page
 
 ## Setup
 
