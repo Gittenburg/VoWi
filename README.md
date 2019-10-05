@@ -14,7 +14,7 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 
 ## Setup
 
-For an examplary configuration, refer to `LocalSettings.php`.
+For an examplary configuration, refer to `ExampleLocalSettings.php`.
 
 ## Credits
 

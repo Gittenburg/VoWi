@@ -6,8 +6,10 @@ class VoWiHooks {
 
 	public static function renderSearchInput( $input, $args, $parser) {
 		global $wgScript;
+		$label = wfMessage('search');
 		// the mediawiki.searchSuggest module enables suggestions for inputs with the mw-searchInput class
-		return "<form action='$wgScript'><input type=hidden name=title value=Special:Search><input name=search class=mw-searchInput></form>";
+		return "<form action='$wgScript'><input type=hidden name=title value=Special:Search>
+			<input autofocus name=search class=mw-searchInput> <button>$label</button></form>";
 	}
 
 	static function onBeforeSortAttachments(&$links){
