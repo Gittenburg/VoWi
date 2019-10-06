@@ -47,7 +47,7 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 				'page_namespace' => $namespace,
 
 				// Modification: use Extension:TitleKey for case-insensitive searches
-				'tk_key' . $dbr->buildLike( $prefix, $dbr->anyString() ),
+				'tk_key' . $dbr->buildLike( $dbr->anyString(), $prefix, $dbr->anyString() ),
 			];
 
 			if (strpos($search, '/') == false)
@@ -72,6 +72,10 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 					WHEN page_namespace = $NS_FILE THEN 30
 					ELSE page_namespace
 				END", // prefer course pages over files
+				"CASE
+					WHEN tk_key {$dbr->buildLike($prefix, $dbr->anyString())} THEN 0
+					ELSE 1
+				END", // prefix matches first
 				'page_title',
 				'page_namespace'
 			],
