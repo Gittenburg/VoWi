@@ -57,21 +57,24 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 			$conds[] = $dbr->makeList( $condition, LIST_AND );
 		}
 
-		// Modification: demote pages in $wgOutdatedLVACategory
-		$table = ['page', 'outdated' => 'categorylinks', 'tk' => 'titlekey'];
 		$uniNamespaceIds = join(',', array_keys($wgUniNamespaces));
 		$NS_FILE = NS_FILE;
-		$fields = [ 'page_id', 'page_namespace', 'page_title',
-			'if(cl_from is NULL,0,1) as outdated',
-			"CASE
-				WHEN page_namespace in ($uniNamespaceIds) THEN 20
-				WHEN page_namespace = $NS_FILE THEN 30
-				ELSE page_namespace
-			END AS ns_key"];
+
+		$table = ['page', 'outdated' => 'categorylinks', 'tk' => 'titlekey'];
+		$fields = [ 'page_id', 'page_namespace', 'page_title'];
 		$conds = $dbr->makeList( $conds, LIST_OR );
 		$options = [
 			'LIMIT' => $limit,
-			'ORDER BY' => [ 'outdated', 'ns_key', 'page_title', 'page_namespace'],
+			'ORDER BY' => [
+				'if(cl_from is NULL,0,1)', // up to date courses first
+				"CASE
+					WHEN page_namespace in ($uniNamespaceIds) THEN 20
+					WHEN page_namespace = $NS_FILE THEN 30
+					ELSE page_namespace
+				END", // prefer course pages over files
+				'page_title',
+				'page_namespace'
+			],
 			'OFFSET' => $offset
 		];
 		$join_conds = [
