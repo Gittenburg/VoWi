@@ -46,7 +46,7 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 				'tk_key' . $dbr->buildLike( $dbr->anyString(), $prefix, $dbr->anyString() ),
 			];
 
-			if (strpos($search, '/') == false)
+			if (strpos($search, '/') === false)
 				// exclude subpages by default because we have so many
 				$condition[] = 'NOT page_title' . $dbr->buildLike( $dbr->anyString(), '/', $dbr->anyString());
 
