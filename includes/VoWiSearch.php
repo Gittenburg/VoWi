@@ -25,25 +25,24 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 			$namespaces[] = NS_MAIN;
 		}
 
-		$prefixes = [];
+		$prefix = $wgContLang->caseFold( $search );
+		$dbr = wfGetDB( DB_REPLICA );
+		$conds = [];
+
 		foreach ( $namespaces as $namespace ) {
 			// For now, if special is included, ignore the other namespaces
 			if ( $namespace == NS_SPECIAL ) {
 				return $this->specialSearch( $search, $limit, $offset );
 			}
 
-			$prefix = $wgContLang->caseFold( $search );
-			$prefixes[$prefix][] = $namespace;
-		}
-
-		$dbr = wfGetDB( DB_REPLICA );
-		$conds = [];
-		foreach ( $prefixes as $prefix => $namespace ) {
 			$condition = [
 				'page_namespace' => $namespace,
 
 				// use Extension:TitleKey for case-insensitive searches
-				'tk_key' . $dbr->buildLike( $dbr->anyString(), $prefix, $dbr->anyString() ),
+				'tk_key' . $dbr->buildLike(
+					$namespace == NS_FILE ? '' : $dbr->anyString(),
+					$prefix,
+					$dbr->anyString() ),
 			];
 
 			if (strpos($search, '/') === false)

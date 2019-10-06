@@ -14,7 +14,7 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 	* case-insensitive due to Extension:TitleKey
 	* pages in `$wgOutdatedLVACategory` are demoted
 	* pages in `$wgUniNamespaces` are preferred over files
-	* supports matches in the middle of titles
+	* supports matches in the middle of titles (except for files)
 * provides a `<searchinput>` tag to put a search input with autocompletion on a page
 
 ## Setup
