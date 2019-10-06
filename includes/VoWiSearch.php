@@ -25,8 +25,6 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 			$namespaces[] = NS_MAIN;
 		}
 
-		// Construct suitable prefix for each namespace. They differ in cases where
-		// some namespaces always capitalize and some don't.
 		$prefixes = [];
 		foreach ( $namespaces as $namespace ) {
 			// For now, if special is included, ignore the other namespaces
@@ -39,19 +37,17 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 		}
 
 		$dbr = wfGetDB( DB_REPLICA );
-		// Often there is only one prefix that applies to all requested namespaces,
-		// but sometimes there are two if some namespaces do not always capitalize.
 		$conds = [];
 		foreach ( $prefixes as $prefix => $namespace ) {
 			$condition = [
 				'page_namespace' => $namespace,
 
-				// Modification: use Extension:TitleKey for case-insensitive searches
+				// use Extension:TitleKey for case-insensitive searches
 				'tk_key' . $dbr->buildLike( $dbr->anyString(), $prefix, $dbr->anyString() ),
 			];
 
 			if (strpos($search, '/') == false)
-				// Modification: exclude subpages by default because we have so many
+				// exclude subpages by default because we have so many
 				$condition[] = 'NOT page_title' . $dbr->buildLike( $dbr->anyString(), '/', $dbr->anyString());
 
 			$conds[] = $dbr->makeList( $condition, LIST_AND );
