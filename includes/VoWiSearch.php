@@ -39,10 +39,10 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 				'page_namespace' => $namespace,
 
 				// use Extension:TitleKey for case-insensitive searches
-				'tk_key' . $dbr->buildLike(
-					$namespace == NS_FILE ? '' : $dbr->anyString(),
-					$prefix,
-					$dbr->anyString() ),
+				$dbr->makeList([
+					'tk_key'   . $dbr->buildLike($dbr->anyString(), $prefix, $dbr->anyString()),
+					'pp_value' . $dbr->buildLike($dbr->anyString(), strtolower($search), $dbr->anyString())
+				], LIST_OR)
 			];
 
 			if (strpos($search, '/') === false)
@@ -55,7 +55,7 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 		$uniNamespaceIds = join(',', array_keys($wgUniNamespaces));
 		$NS_FILE = NS_FILE;
 
-		$table = ['page', 'outdated' => 'categorylinks', 'tk' => 'titlekey'];
+		$table = ['page', 'outdated' => 'categorylinks', 'tk' => 'titlekey', 'pp' => 'page_props'];
 		$fields = [ 'page_id', 'page_namespace', 'page_title'];
 		$conds = $dbr->makeList( $conds, LIST_OR );
 		$options = [
@@ -78,7 +78,8 @@ class VoWiTitlePrefixSearch extends TitlePrefixSearch {
 		];
 		$join_conds = [
 			'outdated' => ['LEFT JOIN', ['page_id=cl_from', 'cl_to'=>$wgOutdatedLVACategory]],
-			'tk' => ['JOIN', ['tk_page=page_id']]
+			'tk' => ['JOIN', ['tk_page=page_id']],
+			'pp' => ['LEFT JOIN', ['page_id=pp_page', 'pp_propname="abbreviation"']]
 		];
 
 		$res = $dbr->select( $table, $fields, $conds, __METHOD__, $options, $join_conds );

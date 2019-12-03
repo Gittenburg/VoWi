@@ -8,3 +8,8 @@ $specialPageAliases['de'] = [
 	'FlexiblePrefix' => ['Flexibler Präfix', 'ÄhnlichBenannteSeiten', 'Ähnlich benannte Seiten'],
 	'Resources' => ['Materialien']
 ];
+
+$magicWords = [];
+$magicWords['en'] = [
+	'abbreviation' => [1, 'ABBREVIATION']
+];

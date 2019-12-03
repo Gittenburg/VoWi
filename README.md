@@ -15,6 +15,7 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 	* pages in `$wgOutdatedLVACategory` are demoted
 	* pages in `$wgUniNamespaces` are preferred over files
 	* supports matches in the middle of titles (except for files)
+	* indexes abbreviations set with `{{ABBREVIATION:<text>}}`
 * provides a `<searchinput>` tag to put a search input with autocompletion on a page
 
 ## Setup

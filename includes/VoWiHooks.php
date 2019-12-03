@@ -1,7 +1,12 @@
 <?php
 class VoWiHooks {
 	public static function onParserFirstCallInit( Parser $parser ) {
+		$parser->setFunctionHook('abbreviation', [ self::class, 'renderAbbreviation'], SFH_NO_HASH);
 		$parser->setHook( 'searchinput', [ self::class, 'renderSearchInput' ]);
+	}
+
+	public static function renderAbbreviation( Parser $parser, $abbr) {
+		$parser->getOutput()->setProperty("abbreviation", strtolower($abbr));
 	}
 
 	public static function renderSearchInput( $input, $args, $parser) {
