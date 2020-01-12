@@ -24,6 +24,20 @@ class VoWiHooks {
 			return "{$year}W";
 	}
 
+	public static function extractParams( array $options ) {
+		$results = [];
+		foreach ( $options as $option ) {
+			$pair = array_map( 'trim', explode( '=', $option, 2 ) );
+			if ( count( $pair ) === 2 ) {
+				$results[ $pair[0] ] = $pair[1];
+			}
+			if ( count( $pair ) === 1 ) {
+				$results[ $pair[0] ] = true;
+			}
+		}
+		return $results;
+	}
+
 	public static function renderTOSS(Parser $parser, $code){
 		$semester = self::currentSemester();
 		$current_doc = @file_get_contents(TOSSAPI . "/courses/$code-$semester");
@@ -46,9 +60,12 @@ class VoWiHooks {
 		$lecturers = json_decode(file_get_contents(TOSSAPI . $course['machine']['lecturers']), true);
 		$instanceof = json_decode(file_get_contents(TOSSAPI . $course['machine']['instanceof']), true);
 
-		$lecturers_wiki = join(', ', array_map(function($lecturer){
+		$params = self::extractParams(array_slice( func_get_args(), 2 ));
+
+		$lecturers_wiki = $params['vortragende'] ?? join(', ', array_map(function($lecturer){
 			return "[[tiss.person:{$lecturer['tiss_id']}|{$lecturer['firstname']} {$lecturer['lastname']}]]";
 		}, $lecturers));
+		unset($params['vortragende']);
 
 		$modules_wiki = join("\n", array_map(function($instance){
 			$code = 'E' . str_replace(' ', '', $instance['catalog_code']);
@@ -57,17 +74,26 @@ class VoWiHooks {
 			return "{{Zuordnung|$code|$name|$wahl}}";
 		}, $instanceof));
 
-		$homepage = $course['human']['homepage'] ?? '';
+		$homepage = $params['homepage'] ?? $course['human']['homepage'] ?? '';
+		unset($params['homepage']);
 
-		$args = join('|',array_slice( func_get_args(), 2 ));
+		$ects = $params['ects'] ?? $course['ects'];
+		unset($params['ects']);
+
+		$sprache = $params['sprache'] ?? $course['language'];
+		unset($params['sprache']);
+
+		$args = '';
+		foreach ($params as $key => $val)
+			$args .= "|$key=$val";
 		return ["{{LVA-Daten
 |id=$code
-|ects={$course['ects']}
+|ects=$ects
 |vortragende=$lecturers_wiki
 |homepage=$homepage
-|sprache={$course['language']}
+|sprache=$sprache
 |zuordnungen=$modules_wiki
-|$args
+$args
 }}", 'noparse'=>false];
 	}
 
