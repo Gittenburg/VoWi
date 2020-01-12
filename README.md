@@ -17,6 +17,7 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 	* supports matches in the middle of titles (except for files)
 	* indexes abbreviations set with `{{ABBREVIATION:<text>}}`
 * provides a `<searchinput>` tag to put a search input with autocompletion on a page
+* provides a `#toss` parser function
 
 ## Setup
 

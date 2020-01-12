@@ -1,8 +1,68 @@
 <?php
+define("TOSSAPI", "https://toss.fsinf.at/api");
+
 class VoWiHooks {
 	public static function onParserFirstCallInit( Parser $parser ) {
 		$parser->setFunctionHook('abbreviation', [ self::class, 'renderAbbreviation'], SFH_NO_HASH);
+		$parser->setFunctionHook('toss', [ self::class, 'renderTOSS']);
 		$parser->setHook( 'searchinput', [ self::class, 'renderSearchInput' ]);
+	}
+
+	public static function currentSemester(){
+		$year = date('Y');
+		if (date('m') < 3)
+			return $year - 1 . "W";
+		elseif (date('m') < 10)
+			return "{$year}S";
+		else
+			return "{$year}W";
+	}
+
+	public static function renderTOSS(Parser $parser, $code){
+		$semester = self::currentSemester();
+		$current_doc = @file_get_contents(TOSSAPI . "/courses/$code-$semester");
+		$courses_doc = @file_get_contents(TOSSAPI . "/courses?code=$code");
+
+		if ($courses_doc === false){
+			return 'Could not contact TOSS API.';
+		}
+		$courses = json_decode($courses_doc, true);
+		if (empty($courses)){
+			return "TOSS couldn't find this course.";
+		}
+
+		if ($current_doc === false){
+			$course = $courses[0];
+		} else {
+			$course = json_decode($current_doc, true);
+		}
+
+		$lecturers = json_decode(file_get_contents(TOSSAPI . $course['machine']['lecturers']), true);
+		$instanceof = json_decode(file_get_contents(TOSSAPI . $course['machine']['instanceof']), true);
+
+		$lecturers_wiki = join(', ', array_map(function($lecturer){
+			return "[[tiss.person:{$lecturer['tiss_id']}|{$lecturer['firstname']} {$lecturer['lastname']}]]";
+		}, $lecturers));
+
+		$modules_wiki = join("\n", array_map(function($instance){
+			$code = 'E' . str_replace(' ', '', $instance['catalog_code']);
+			$name = strstr($instance['group_name'], ' ');
+			$wahl = $instance['semester'] ? '' : 'wahl=1';
+			return "{{Zuordnung|$code|$name|$wahl}}";
+		}, $instanceof));
+
+		$homepage = $course['human']['homepage'] ?? '';
+
+		$args = join('|',array_slice( func_get_args(), 2 ));
+		return ["{{LVA-Daten
+|id=$code
+|ects={$course['ects']}
+|vortragende=$lecturers_wiki
+|homepage=$homepage
+|sprache={$course['language']}
+|zuordnungen=$modules_wiki
+|$args
+}}", 'noparse'=>false];
 	}
 
 	public static function renderAbbreviation( Parser $parser, $abbr) {

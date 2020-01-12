@@ -11,5 +11,6 @@ $specialPageAliases['de'] = [
 
 $magicWords = [];
 $magicWords['en'] = [
-	'abbreviation' => [1, 'ABBREVIATION']
+	'abbreviation' => [1, 'ABBREVIATION'],
+	'toss' => [1, 'toss']
 ];
