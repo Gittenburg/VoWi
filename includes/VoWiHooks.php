@@ -5,7 +5,13 @@ class VoWiHooks {
 	public static function onParserFirstCallInit( Parser $parser ) {
 		$parser->setFunctionHook('abbreviation', [ self::class, 'renderAbbreviation'], SFH_NO_HASH);
 		$parser->setFunctionHook('toss', [ self::class, 'renderTOSS']);
+		$parser->setFunctionHook( 'navdisplaytitle', [ self::class, 'renderNavDisplayTitle' ]);
 		$parser->setHook( 'searchinput', [ self::class, 'renderSearchInput' ]);
+	}
+
+	public static function renderNavDisplayTitle($parser, $title){
+		if (substr($parser->getTitle()->getNsText(), -4) == '_Nav')
+			$parser->getOutput()->setDisplayTitle($title);
 	}
 
 	public static function currentSemester(){

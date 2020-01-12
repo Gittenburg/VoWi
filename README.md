@@ -18,6 +18,7 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 	* indexes abbreviations set with `{{ABBREVIATION:<text>}}`
 * provides a `<searchinput>` tag to put a search input with autocompletion on a page
 * provides a `#toss` parser function
+* provides a `#navdisplaytitle` parser function, that only works on `_Nav` namespaces
 
 ## Setup
 
