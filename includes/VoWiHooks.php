@@ -68,7 +68,10 @@ class VoWiHooks {
 		unset($params['vortragende']);
 
 		$modules_wiki = join("\n", array_map(function($instance){
-			$code = 'E' . str_replace(' ', '', $instance['catalog_code']);
+			if ($instance['catalog_code'])
+				$code = 'E' . str_replace(' ', '', $instance['catalog_code']);
+			else
+				$code = 'Catalog/' . $instance['catalog_tiss_id'];
 			$name = strstr($instance['group_name'], ' ');
 			$wahl = $instance['semester'] ? '' : 'wahl=1';
 			return "{{Zuordnung|$code|$name|$wahl}}";
