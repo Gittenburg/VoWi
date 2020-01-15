@@ -14,16 +14,6 @@ class VoWiHooks {
 			$parser->getOutput()->setDisplayTitle($title);
 	}
 
-	public static function currentSemester(){
-		$year = date('Y');
-		if (date('m') < 3)
-			return $year - 1 . "W";
-		elseif (date('m') < 10)
-			return "{$year}S";
-		else
-			return "{$year}W";
-	}
-
 	public static function extractParams( array $options ) {
 		$results = [];
 		foreach ( $options as $option ) {
@@ -39,23 +29,16 @@ class VoWiHooks {
 	}
 
 	public static function renderTOSS(Parser $parser, $code){
-		$semester = self::currentSemester();
-		$current_doc = @file_get_contents(TOSSAPI . "/courses/$code-$semester");
-		$courses_doc = @file_get_contents(TOSSAPI . "/courses?code=$code");
-
-		if ($courses_doc === false){
-			return 'Could not contact TOSS API.';
-		}
-		$courses = json_decode($courses_doc, true);
-		if (empty($courses)){
-			return "TOSS couldn't find this course.";
-		}
+		$current_doc = @file_get_contents(TOSSAPI . "/courses/$code");
 
 		if ($current_doc === false){
-			$course = $courses[0];
-		} else {
-			$course = json_decode($current_doc, true);
+			return 'TOSS could not find the course.';
 		}
+
+		$courses_doc = @file_get_contents(TOSSAPI . "/courses?code=$code");
+		$courses = json_decode($courses_doc, true);
+
+		$course = json_decode($current_doc, true);
 
 		$lecturers = json_decode(file_get_contents(TOSSAPI . $course['machine']['lecturers']), true);
 		$instanceof = json_decode(file_get_contents(TOSSAPI . $course['machine']['instanceof']), true);
@@ -68,10 +51,10 @@ class VoWiHooks {
 		unset($params['vortragende']);
 
 		$modules_wiki = join("\n", array_map(function($instance){
-			if ($instance['catalog_code'])
-				$code = 'E' . str_replace(' ', '', $instance['catalog_code']);
+			if ($instance['catalog']['code'])
+				$code = 'E' . str_replace(' ', '', $instance['catalog']['code']);
 			else
-				$code = 'Catalog/' . $instance['catalog_tiss_id'];
+				$code = 'Catalog/' . $instance['catalog']['tiss_id'];
 			$name = strstr($instance['group_name'], ' ');
 			$wahl = $instance['semester'] ? '' : 'wahl=1';
 			return "{{Zuordnung|$code|$name|$wahl}}";
