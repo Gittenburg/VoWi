@@ -29,19 +29,24 @@ class VoWiHooks {
 	}
 
 	public static function renderTOSS(Parser $parser, $code){
-		$current_doc = @file_get_contents(TOSSAPI . "/courses/$code");
+		$context = stream_context_create([
+			"http" => [
+				"header" => "User-Agent: vowi.fsinf.at (#toss bot)\r\n"
+			]
+		]);
+
+		$current_doc = @file_get_contents(TOSSAPI . "/courses/$code", false, $context);
 
 		if ($current_doc === false){
 			return 'TOSS could not find the course.';
 		}
 
-		$courses_doc = @file_get_contents(TOSSAPI . "/courses?code=$code");
+		$courses_doc = @file_get_contents(TOSSAPI . "/courses?code=$code", false, $context);
 		$courses = json_decode($courses_doc, true);
 
 		$course = json_decode($current_doc, true);
 
-		$lecturers = json_decode(file_get_contents(TOSSAPI . $course['machine']['lecturers']), true);
-		$instanceof = json_decode(file_get_contents(TOSSAPI . $course['machine']['instanceof']), true);
+		$lecturers = json_decode(file_get_contents(TOSSAPI . $course['machine']['lecturers'], false, $context), true);
 
 		$params = self::extractParams(array_slice( func_get_args(), 2 ));
 
@@ -51,14 +56,14 @@ class VoWiHooks {
 		unset($params['vortragende']);
 
 		$modules_wiki = join("\n", array_map(function($instance){
-			if ($instance['catalog']['code'])
-				$code = 'E' . str_replace(' ', '', $instance['catalog']['code']);
+			if ($instance['code'])
+				$code = 'E' . str_replace(' ', '', $instance['code']);
 			else
-				$code = 'Catalog/' . $instance['catalog']['tiss_id'];
+				$code = 'Catalog/' . $instance['tiss_id'];
 			$name = strstr($instance['group_name'], ' ');
 			$wahl = $instance['semester'] ? '' : 'wahl=1';
 			return "{{Zuordnung|$code|$name|$wahl}}";
-		}, $instanceof));
+		}, $course['mapping']));
 
 		$homepage = $params['homepage'] ?? $course['human']['homepage'] ?? '';
 		unset($params['homepage']);
