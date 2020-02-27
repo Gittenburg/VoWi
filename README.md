@@ -6,7 +6,7 @@ This extension is specially tailored for https://vowi.fsinf.at/, depends on [Att
 * prepends FlexiblePrefix to every LVA page (the prefix is everything up to the LVA type)
 * provides `Special:AddLVA` to create LVA pages
 * provides `Special:Resources` (like `Special:FlexiblePrefix` but shows attachments)
-* customizes attachments sorting, so that correctly formatted dates (`YYYY` or `YYYY-MM-DD`) are sorted newest to oldest
+* customizes attachments sorting, so that correctly formatted dates (`2020`, `2020W`, `2020S`, `2020-01-28`) are sorted newest to oldest
 * hooks into the edit form to preload configurable text when creating LVAs (`MediaWiki:editformpreload-lva`) and Beispiel pages (`MediaWiki:editformpreload-beispiel`)
 * provides `Special:CourseById` which redirects you to a LVA page given its course id and namespace (requires [Semantic MediaWiki](https://www.semantic-mediawiki.org/)).
 * provides vastly improved search autocompletion (`$wgSearchType = 'VoWiSearch';`), requires [Extension:TitleKey](https://www.mediawiki.org/wiki/Extension:TitleKey)
