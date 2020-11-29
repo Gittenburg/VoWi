@@ -20,7 +20,7 @@ class SpecialCourseById extends SpecialPage {
 		$id = $this->getRequest()->getText('id');
 
 		if (empty($id)){
-			$out->addWikiText(self::USAGE);
+			$out->addWikiTextAsInterface(self::USAGE);
 			return;
 		}
 
@@ -36,11 +36,11 @@ class SpecialCourseById extends SpecialPage {
 			);
 		} else if ($res->getCount() > 1){
 			$out->setPageTitle(wfMessage('coursebyid-multiple-results'));
-			$out->addWikiText(SMWQueryProcessor::getResultPrinter('ul')->getResult($res, $params, SMW_OUTPUT_WIKI));
+			$out->addWikiTextAsInterface(SMWQueryProcessor::getResultPrinter('ul')->getResult($res, $params, SMW_OUTPUT_WIKI));
 
 		} else {
 			$out->setPageTitle(wfMessage('coursebyid-not-found'));
-			$out->addWikiText(wfMessage('coursebyid-not-found-text')->text());
+			$out->addWikiTextAsInterface(wfMessage('coursebyid-not-found-text')->text());
 		}
 	}
 }
